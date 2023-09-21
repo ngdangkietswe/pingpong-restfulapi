@@ -17,9 +17,10 @@ management:
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/customer_db
+    url: jdbc:postgresql://localhost:5432/customer_db?createDatabaseIfNotExist=true&useEncoding=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&useLegacyDatetimeCode=false&serverTimezone=Asia/Ho_Chi_Minh&useSSL=false&allowPublicKeyRetrieval=true
     username: postgres
     password: root
+    driver-class-name: org.postgresql.Driver
 
   flyway:
     baseline-on-migrate: true
