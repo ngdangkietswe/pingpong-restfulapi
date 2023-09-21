@@ -1,0 +1,44 @@
+server:
+  port: 6969
+  error:
+    include-message: always
+
+cors:
+  allowed-origins: "*"
+  allowed-methods: "*"
+  allowed-headers: "*"
+  exposed-headers: "*"
+
+management:
+  endpoint:
+    web:
+      exposure:
+        include: "health,info"
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/customer_db
+    username: postgres
+    password: root
+
+  flyway:
+    baseline-on-migrate: true
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  main:
+    web-application-type: servlet
+
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+  codec:
+    max-in-memory-size: 10MB
