@@ -12,6 +12,7 @@ import dev.ngdangkiet.pingpongrestfulapi.exception.RequestValidationException;
 import dev.ngdangkiet.pingpongrestfulapi.exception.ResourceNotFoundException;
 import dev.ngdangkiet.pingpongrestfulapi.security.CustomPasswordEncoder;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,6 +29,7 @@ import java.util.stream.Collectors;
 public class CustomerServiceImpl implements ICustomerService {
     private final CustomerRepository customerRepository;
     private final CustomPasswordEncoder customPasswordEncoder;
+    private final PasswordEncoder passwordEncoder;
     private final CustomerMapper customerMapper;
 
     @Override
@@ -52,7 +54,7 @@ public class CustomerServiceImpl implements ICustomerService {
                 insertRequest.email(),
                 insertRequest.age(),
                 Gender.valueOf(insertRequest.gender()),
-                customPasswordEncoder.encode(insertRequest.password())
+                passwordEncoder.encode(insertRequest.password())
         );
         customerRepository.save(customerEntity);
     }
