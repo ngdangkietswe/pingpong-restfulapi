@@ -13,4 +13,12 @@ public record ApiError(
         int statusCode,
         LocalDateTime localDateTime
 ) {
+    public ApiError(String path, String message, int statusCode) {
+        this(
+                path,
+                message,
+                statusCode,
+                LocalDateTime.now()
+        );
+    }
 }

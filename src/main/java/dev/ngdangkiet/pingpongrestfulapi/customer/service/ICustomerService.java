@@ -21,8 +21,4 @@ public interface ICustomerService {
     void updateCustomer(Long id, CustomerUpdateRequest customer);
 
     void deleteCustomerById(Long id);
-
-    boolean existCustomerById(Long id);
-
-    boolean existCustomerByEmail(String email);
 }

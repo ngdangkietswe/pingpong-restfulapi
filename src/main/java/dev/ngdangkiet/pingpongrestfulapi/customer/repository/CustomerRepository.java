@@ -11,11 +11,11 @@ import java.util.Optional;
  * @since 9/20/2023
  */
 
-@Repository
+@Repository("customerJpaRepository")
 public interface CustomerRepository extends IBaseRepository<CustomerEntity> {
-    boolean existCustomerById(Long id);
+    boolean existsCustomerById(Long id);
 
-    boolean existCustomerByEmail(String email);
+    boolean existsCustomerByEmail(String email);
 
     Optional<CustomerEntity> findCustomerByEmail(String email);
 }

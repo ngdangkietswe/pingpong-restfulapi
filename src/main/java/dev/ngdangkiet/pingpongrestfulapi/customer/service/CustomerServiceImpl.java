@@ -88,24 +88,22 @@ public class CustomerServiceImpl implements ICustomerService {
 
     @Override
     public void deleteCustomerById(Long id) {
-        if (!existCustomerById(id)) {
+        if (!existsCustomerById(id)) {
             throw new ResourceNotFoundException("customerId", id);
         }
         customerRepository.deleteById(id);
     }
 
-    @Override
-    public boolean existCustomerById(Long id) {
-        return customerRepository.existCustomerById(id);
+    private boolean existsCustomerById(Long id) {
+        return customerRepository.existsCustomerById(id);
     }
 
-    @Override
-    public boolean existCustomerByEmail(String email) {
-        return customerRepository.existCustomerByEmail(email);
+    private boolean existsCustomerByEmail(String email) {
+        return customerRepository.existsCustomerByEmail(email);
     }
 
     private void validateUpsertCustomer(String email) {
-        if (customerRepository.existCustomerByEmail(email)) {
+        if (existsCustomerByEmail(email)) {
             throw new DuplicateResourceException("customerEmail", email);
         }
     }
