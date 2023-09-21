@@ -30,11 +30,10 @@ public class PingpongRestfulapiApplication {
     private static void createRandomCustomer(CustomPasswordEncoder customPasswordEncoder,
                                              CustomerRepository customerRepository) {
         Faker faker = new Faker();
-        String name = faker.name().fullName();
         int age = new Random().nextInt(18, 60);
         CustomerEntity customerEntity = new CustomerEntity(
-                name,
-                String.format("%s@ngdangkiet.com", name),
+                faker.name().fullName(),
+                String.format("%s%s@ngdangkiet.com", faker.name().firstName().toLowerCase(), faker.name().lastName().toLowerCase()),
                 age,
                 age % 2 == 0 ? Gender.MALE : Gender.FEMALE,
                 customPasswordEncoder.encode("Prot3ct3d")

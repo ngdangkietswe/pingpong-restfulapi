@@ -12,7 +12,6 @@ public record CustomerDTO(
         Long id,
         String name,
         String email,
-        String password,
         String gender,
         Integer age,
         List<String> roles

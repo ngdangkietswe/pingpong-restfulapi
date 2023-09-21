@@ -10,8 +10,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.BAD_REQUEST)
 public class RequestValidationException extends RuntimeException {
-    public RequestValidationException(Object key) {
-        super(String.format("Invalid %s", key));
+    public RequestValidationException(String message) {
+        super(message);
     }
-
 }

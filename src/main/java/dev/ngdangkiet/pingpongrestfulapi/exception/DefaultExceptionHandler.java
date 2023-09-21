@@ -62,4 +62,16 @@ public class DefaultExceptionHandler {
                 HttpStatus.CONFLICT
         );
     }
+
+    @ExceptionHandler(RequestValidationException.class)
+    public ResponseEntity<ApiError> handleException(RequestValidationException ex, HttpServletRequest request) {
+        return new ResponseEntity<>(
+                new ApiError(
+                        request.getRequestURI(),
+                        ex.getMessage(),
+                        HttpStatus.BAD_REQUEST.value()
+                ),
+                HttpStatus.BAD_REQUEST
+        );
+    }
 }

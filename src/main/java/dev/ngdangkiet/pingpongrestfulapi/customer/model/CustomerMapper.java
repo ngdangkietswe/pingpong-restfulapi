@@ -20,7 +20,6 @@ public class CustomerMapper implements Function<CustomerEntity, CustomerDTO> {
                 entity.getId(),
                 entity.getName(),
                 entity.getEmail(),
-                entity.getPassword(),
                 entity.getGender().name(),
                 entity.getAge(),
                 entity.getAuthorities()
