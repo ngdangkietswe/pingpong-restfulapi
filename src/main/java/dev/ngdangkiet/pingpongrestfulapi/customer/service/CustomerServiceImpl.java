@@ -1,5 +1,6 @@
 package dev.ngdangkiet.pingpongrestfulapi.customer.service;
 
+import dev.ngdangkiet.pingpongrestfulapi.cache.RedisUtil;
 import dev.ngdangkiet.pingpongrestfulapi.csv.CsvHelper;
 import dev.ngdangkiet.pingpongrestfulapi.customer.model.CustomerDTO;
 import dev.ngdangkiet.pingpongrestfulapi.customer.model.CustomerEntity;
@@ -15,6 +16,7 @@ import dev.ngdangkiet.pingpongrestfulapi.security.CustomPasswordEncoder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.io.ByteArrayInputStream;
 import java.util.List;
@@ -33,12 +35,22 @@ public class CustomerServiceImpl implements ICustomerService {
     private final CustomPasswordEncoder customPasswordEncoder;
     private final PasswordEncoder passwordEncoder;
     private final CustomerMapper customerMapper;
+    private final RedisUtil redisUtil;
+    private static final String CUSTOMER_KEY = "customer";
 
     @Override
     public List<CustomerDTO> findAllCustomer() {
-        return customerRepository.findAll().stream()
+        List<CustomerDTO> customers = redisUtil.getList(CUSTOMER_KEY, CustomerDTO.class);
+        if (!CollectionUtils.isEmpty(customers)) {
+            return customers;
+        }
+
+        customers = customerRepository.findAll().stream()
                 .map(customerMapper)
                 .collect(Collectors.toList());
+        redisUtil.putList(CUSTOMER_KEY, customers);
+
+        return customers;
     }
 
     @Override

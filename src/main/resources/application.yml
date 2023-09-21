@@ -43,3 +43,8 @@ spring:
       max-request-size: 10MB
   codec:
     max-in-memory-size: 10MB
+
+  data:
+    redis:
+      host: localhost
+      port: 6379
