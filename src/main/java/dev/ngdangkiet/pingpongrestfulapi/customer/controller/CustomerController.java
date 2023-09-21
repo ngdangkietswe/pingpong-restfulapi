@@ -5,6 +5,11 @@ import dev.ngdangkiet.pingpongrestfulapi.customer.payload.CustomerUpdateRequest;
 import dev.ngdangkiet.pingpongrestfulapi.customer.service.ICustomerService;
 import dev.ngdangkiet.pingpongrestfulapi.payload.Response;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -51,5 +56,16 @@ public class CustomerController {
     public Response<Object> deleteCustomer(@PathVariable Long id) {
         customerService.deleteCustomerById(id);
         return new Response<>(null);
+    }
+
+    @GetMapping("/csv")
+    public ResponseEntity<Resource> export2CSV() {
+        String fileName = "customers.csv";
+        InputStreamResource inputStreamResource = new InputStreamResource(customerService.export2CSV());
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, String.format("attachment; filename=%s", fileName))
+                .contentType(MediaType.parseMediaType("application/csv"))
+                .body(inputStreamResource);
     }
 }

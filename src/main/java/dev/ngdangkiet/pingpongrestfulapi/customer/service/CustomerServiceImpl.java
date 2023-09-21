@@ -1,5 +1,6 @@
 package dev.ngdangkiet.pingpongrestfulapi.customer.service;
 
+import dev.ngdangkiet.pingpongrestfulapi.csv.CsvHelper;
 import dev.ngdangkiet.pingpongrestfulapi.customer.model.CustomerDTO;
 import dev.ngdangkiet.pingpongrestfulapi.customer.model.CustomerEntity;
 import dev.ngdangkiet.pingpongrestfulapi.customer.model.CustomerMapper;
@@ -15,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.io.ByteArrayInputStream;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -94,6 +96,11 @@ public class CustomerServiceImpl implements ICustomerService {
             throw new ResourceNotFoundException("customerId", id);
         }
         customerRepository.deleteById(id);
+    }
+
+    @Override
+    public ByteArrayInputStream export2CSV() {
+        return CsvHelper.customer2CSV(findAllCustomer());
     }
 
     private boolean existsCustomerById(Long id) {

@@ -4,6 +4,7 @@ import dev.ngdangkiet.pingpongrestfulapi.customer.model.CustomerDTO;
 import dev.ngdangkiet.pingpongrestfulapi.customer.payload.CustomerInsertRequest;
 import dev.ngdangkiet.pingpongrestfulapi.customer.payload.CustomerUpdateRequest;
 
+import java.io.ByteArrayInputStream;
 import java.util.List;
 
 /**
@@ -21,4 +22,6 @@ public interface ICustomerService {
     void updateCustomer(Long id, CustomerUpdateRequest customer);
 
     void deleteCustomerById(Long id);
+
+    ByteArrayInputStream export2CSV();
 }
