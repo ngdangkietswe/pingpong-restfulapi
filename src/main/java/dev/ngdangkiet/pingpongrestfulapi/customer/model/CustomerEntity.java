@@ -58,6 +58,14 @@ public class CustomerEntity implements UserDetails {
     @Column(nullable = false)
     private String password;
 
+    public CustomerEntity(String name, String email, Integer age, Gender gender, String password) {
+        this.name = name;
+        this.email = email;
+        this.age = age;
+        this.gender = gender;
+        this.password = password;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(Role.USER.name()));

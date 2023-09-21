@@ -1,6 +1,8 @@
 package dev.ngdangkiet.pingpongrestfulapi.customer.service;
 
-import dev.ngdangkiet.pingpongrestfulapi.customer.model.CustomerEntity;
+import dev.ngdangkiet.pingpongrestfulapi.customer.model.CustomerDTO;
+import dev.ngdangkiet.pingpongrestfulapi.customer.payload.CustomerInsertRequest;
+import dev.ngdangkiet.pingpongrestfulapi.customer.payload.CustomerUpdateRequest;
 
 import java.util.List;
 
@@ -10,13 +12,13 @@ import java.util.List;
  */
 
 public interface ICustomerService {
-    List<CustomerEntity> findAllCustomer();
+    List<CustomerDTO> findAllCustomer();
 
-    CustomerEntity findCustomerById(Long id);
+    CustomerDTO findCustomerById(Long id);
 
-    void insertCustomer(CustomerEntity entity);
+    void insertCustomer(CustomerInsertRequest customer);
 
-    void updateCustomer(CustomerEntity entity);
+    void updateCustomer(Long id, CustomerUpdateRequest customer);
 
     void deleteCustomerById(Long id);
 
