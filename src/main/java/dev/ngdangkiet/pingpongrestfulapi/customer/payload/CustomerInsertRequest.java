@@ -1,8 +1,13 @@
 package dev.ngdangkiet.pingpongrestfulapi.customer.payload;
 
+import dev.ngdangkiet.pingpongrestfulapi.common.PingPongConstant;
 import dev.ngdangkiet.pingpongrestfulapi.validation.ValidationGender;
+import dev.ngdangkiet.pingpongrestfulapi.validation.ValidationPassword;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 
 /**
  * @author ngdangkiet
@@ -14,7 +19,7 @@ public record CustomerInsertRequest(
         String name,
         @Email(message = "Invalid email!")
         String email,
-        @NotBlank(message = "Password shouldn't be null or empty!")
+        @ValidationPassword
         String password,
         @ValidationGender
         String gender, // MALE OR FEMALE OR OTHER

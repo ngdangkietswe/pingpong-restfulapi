@@ -92,7 +92,7 @@ public class DefaultExceptionHandler {
         return new ResponseEntity<>(
                 new ApiError(
                         request.getRequestURI(),
-                        ex.getMessage(),
+                        "Client error!",
                         HttpStatus.BAD_REQUEST.value(),
                         errorMap
                 ),
