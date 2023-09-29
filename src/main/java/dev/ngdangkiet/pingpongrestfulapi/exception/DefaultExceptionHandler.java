@@ -4,8 +4,13 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author ngdangkiet
@@ -21,7 +26,8 @@ public class DefaultExceptionHandler {
                 new ApiError(
                         request.getRequestURI(),
                         ex.getMessage(),
-                        HttpStatus.INTERNAL_SERVER_ERROR.value()
+                        HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                        Collections.emptyMap()
                 ),
                 HttpStatus.INTERNAL_SERVER_ERROR
         );
@@ -33,7 +39,8 @@ public class DefaultExceptionHandler {
                 new ApiError(
                         request.getRequestURI(),
                         ex.getMessage(),
-                        HttpStatus.UNAUTHORIZED.value()
+                        HttpStatus.UNAUTHORIZED.value(),
+                        Collections.emptyMap()
                 ),
                 HttpStatus.UNAUTHORIZED
         );
@@ -45,7 +52,8 @@ public class DefaultExceptionHandler {
                 new ApiError(
                         request.getRequestURI(),
                         ex.getMessage(),
-                        HttpStatus.NOT_FOUND.value()
+                        HttpStatus.NOT_FOUND.value(),
+                        Collections.emptyMap()
                 ),
                 HttpStatus.NOT_FOUND
         );
@@ -57,7 +65,8 @@ public class DefaultExceptionHandler {
                 new ApiError(
                         request.getRequestURI(),
                         ex.getMessage(),
-                        HttpStatus.CONFLICT.value()
+                        HttpStatus.CONFLICT.value(),
+                        Collections.emptyMap()
                 ),
                 HttpStatus.CONFLICT
         );
@@ -69,7 +78,23 @@ public class DefaultExceptionHandler {
                 new ApiError(
                         request.getRequestURI(),
                         ex.getMessage(),
-                        HttpStatus.BAD_REQUEST.value()
+                        HttpStatus.BAD_REQUEST.value(),
+                        Collections.emptyMap()
+                ),
+                HttpStatus.BAD_REQUEST
+        );
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ApiError> handleException(MethodArgumentNotValidException ex, HttpServletRequest request) {
+        Map<String, String> errorMap = new HashMap<>();
+        ex.getBindingResult().getFieldErrors().forEach(error -> errorMap.put(error.getField(), error.getDefaultMessage()));
+        return new ResponseEntity<>(
+                new ApiError(
+                        request.getRequestURI(),
+                        ex.getMessage(),
+                        HttpStatus.BAD_REQUEST.value(),
+                        errorMap
                 ),
                 HttpStatus.BAD_REQUEST
         );

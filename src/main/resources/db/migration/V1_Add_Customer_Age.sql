@@ -1,2 +1,2 @@
 alter table customer
-add column age int not null;
+    add column age int not null;

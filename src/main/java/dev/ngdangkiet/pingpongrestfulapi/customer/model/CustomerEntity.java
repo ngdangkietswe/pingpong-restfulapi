@@ -1,5 +1,6 @@
 package dev.ngdangkiet.pingpongrestfulapi.customer.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -72,6 +73,7 @@ public class CustomerEntity implements UserDetails {
     }
 
     @Override
+    @JsonIgnore
     public String getPassword() {
         return this.password;
     }

@@ -1,6 +1,7 @@
 package dev.ngdangkiet.pingpongrestfulapi.exception;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 
 /**
  * @author ngdangkiet
@@ -11,13 +12,15 @@ public record ApiError(
         String path,
         String message,
         int statusCode,
+        Map<String, String> errors,
         LocalDateTime localDateTime
 ) {
-    public ApiError(String path, String message, int statusCode) {
+    public ApiError(String path, String message, int statusCode, Map<String, String> errors) {
         this(
                 path,
                 message,
                 statusCode,
+                errors,
                 LocalDateTime.now()
         );
     }

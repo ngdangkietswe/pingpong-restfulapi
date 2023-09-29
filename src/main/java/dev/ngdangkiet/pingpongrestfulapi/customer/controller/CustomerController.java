@@ -4,6 +4,7 @@ import dev.ngdangkiet.pingpongrestfulapi.customer.payload.CustomerInsertRequest;
 import dev.ngdangkiet.pingpongrestfulapi.customer.payload.CustomerUpdateRequest;
 import dev.ngdangkiet.pingpongrestfulapi.customer.service.ICustomerService;
 import dev.ngdangkiet.pingpongrestfulapi.payload.Response;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
@@ -41,7 +42,7 @@ public class CustomerController {
     }
 
     @PostMapping
-    public Response<Object> insertCustomer(@RequestBody CustomerInsertRequest insertRequest) {
+    public Response<Object> insertCustomer(@Valid @RequestBody CustomerInsertRequest insertRequest) {
         customerService.insertCustomer(insertRequest);
         return new Response<>(null);
     }

@@ -19,14 +19,6 @@ public class PingpongRestfulapiApplication {
         SpringApplication.run(PingpongRestfulapiApplication.class, args);
     }
 
-    @Bean
-    CommandLineRunner commandLineRunner(CustomPasswordEncoder customPasswordEncoder,
-                                        CustomerRepository customerRepository) {
-        return args -> {
-            createRandomCustomer(customPasswordEncoder, customerRepository);
-        };
-    }
-
     private static void createRandomCustomer(CustomPasswordEncoder customPasswordEncoder,
                                              CustomerRepository customerRepository) {
         Faker faker = new Faker();
@@ -39,5 +31,13 @@ public class PingpongRestfulapiApplication {
                 customPasswordEncoder.encode("Prot3ct3d")
         );
         customerRepository.save(customerEntity);
+    }
+
+    @Bean
+    CommandLineRunner commandLineRunner(CustomPasswordEncoder customPasswordEncoder,
+                                        CustomerRepository customerRepository) {
+        return args -> {
+            createRandomCustomer(customPasswordEncoder, customerRepository);
+        };
     }
 }

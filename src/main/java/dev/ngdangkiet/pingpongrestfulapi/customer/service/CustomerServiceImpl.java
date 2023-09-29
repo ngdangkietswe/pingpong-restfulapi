@@ -13,12 +13,17 @@ import dev.ngdangkiet.pingpongrestfulapi.exception.DuplicateResourceException;
 import dev.ngdangkiet.pingpongrestfulapi.exception.RequestValidationException;
 import dev.ngdangkiet.pingpongrestfulapi.exception.ResourceNotFoundException;
 import dev.ngdangkiet.pingpongrestfulapi.security.CustomPasswordEncoder;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import java.io.ByteArrayInputStream;
+import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -31,12 +36,21 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class CustomerServiceImpl implements ICustomerService {
+    private static final String CUSTOMER_KEY = "customer";
     private final CustomerRepository customerRepository;
     private final CustomPasswordEncoder customPasswordEncoder;
     private final PasswordEncoder passwordEncoder;
     private final CustomerMapper customerMapper;
     private final RedisUtil redisUtil;
-    private static final String CUSTOMER_KEY = "customer";
+
+    public static void main(String[] args) throws NoSuchFieldException, IllegalAccessException {
+        Obj obj = new Obj(1);
+        Class<?> clazz = obj.getClass();
+        Field field = clazz.getDeclaredField("number");
+        field.setAccessible(true);
+        field.setInt(obj, 2);
+        System.out.println(obj.getNumber());
+    }
 
     @Override
     public List<CustomerDTO> findAllCustomer() {
@@ -127,5 +141,13 @@ public class CustomerServiceImpl implements ICustomerService {
         if (existsCustomerByEmail(email)) {
             throw new DuplicateResourceException("customerEmail", email);
         }
+    }
+
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Getter
+    @Setter
+    static class Obj {
+        private int number;
     }
 }

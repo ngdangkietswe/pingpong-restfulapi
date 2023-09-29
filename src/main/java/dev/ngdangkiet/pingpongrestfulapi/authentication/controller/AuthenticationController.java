@@ -3,7 +3,6 @@ package dev.ngdangkiet.pingpongrestfulapi.authentication.controller;
 import dev.ngdangkiet.pingpongrestfulapi.authentication.payload.AuthenticationRequest;
 import dev.ngdangkiet.pingpongrestfulapi.authentication.payload.AuthenticationResponse;
 import dev.ngdangkiet.pingpongrestfulapi.authentication.service.IAuthenticationService;
-import dev.ngdangkiet.pingpongrestfulapi.payload.Response;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
