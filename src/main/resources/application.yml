@@ -48,3 +48,7 @@ spring:
     redis:
       host: localhost
       port: 6379
+
+  messages:
+    encoding: UTF-8
+    basename: classpath:i18n/messages

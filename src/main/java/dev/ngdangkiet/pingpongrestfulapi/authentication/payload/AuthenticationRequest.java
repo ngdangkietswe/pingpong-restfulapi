@@ -1,6 +1,5 @@
 package dev.ngdangkiet.pingpongrestfulapi.authentication.payload;
 
-import dev.ngdangkiet.pingpongrestfulapi.validation.ValidationPassword;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 

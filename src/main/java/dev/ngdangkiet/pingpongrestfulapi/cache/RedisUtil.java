@@ -9,6 +9,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
+import java.time.Duration;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -38,14 +39,14 @@ public class RedisUtil {
         }
     }
 
-    public <D> void putList(String key, List<D> data) {
+    public <D> void putList(String key, List<D> data, Duration duration) {
         if (CollectionUtils.isEmpty(data)) {
             log.warn("Data is null!");
             return;
         }
 
         try {
-            redisTemplate.opsForValue().set(key, mapper.writeValueAsString(data));
+            redisTemplate.opsForValue().set(key, mapper.writeValueAsString(data), duration);
         } catch (JsonProcessingException e) {
             log.error("Failed to cache data for key {}. Error: {}", key, e.getMessage());
         }

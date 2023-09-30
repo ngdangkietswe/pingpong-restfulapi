@@ -19,7 +19,7 @@ import java.lang.annotation.Target;
 @Documented
 @Constraint(validatedBy = PasswordValidator.class)
 public @interface ValidationPassword {
-    String message() default "Invalid password!. It should be size (8-16), has at least one (special character, normal character, number)";
+    String message() default "Invalid password!";
 
     Class<?>[] groups() default {};
 

@@ -7,7 +7,9 @@ import dev.ngdangkiet.pingpongrestfulapi.customer.model.CustomerEntity;
 import dev.ngdangkiet.pingpongrestfulapi.customer.model.CustomerMapper;
 import dev.ngdangkiet.pingpongrestfulapi.jwt.JwtUtil;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
@@ -19,6 +21,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class AuthenticationImpl implements IAuthenticationService {
     private final CustomerMapper customerMapper;
     private final JwtUtil jwtUtil;
@@ -26,16 +29,20 @@ public class AuthenticationImpl implements IAuthenticationService {
 
     @Override
     public AuthenticationResponse login(AuthenticationRequest authenticationRequest) {
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        authenticationRequest.username(),
-                        authenticationRequest.password()
-                )
-        );
+        try {
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            authenticationRequest.username(),
+                            authenticationRequest.password()
+                    )
+            );
+            CustomerEntity customerEntity = (CustomerEntity) authentication.getPrincipal();
+            CustomerDTO customerDTO = customerMapper.apply(customerEntity);
 
-        CustomerEntity customerEntity = (CustomerEntity) authentication.getPrincipal();
-        CustomerDTO customerDTO = customerMapper.apply(customerEntity);
-
-        return new AuthenticationResponse(jwtUtil.issueToken(customerDTO.email()), customerDTO);
+            return new AuthenticationResponse(jwtUtil.issueToken(customerDTO.email()), customerDTO);
+        } catch (BadCredentialsException ex) {
+            log.error("Login failed: {}", ex.getMessage());
+            throw new BadCredentialsException("Invalid username or password!");
+        }
     }
 }

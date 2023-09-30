@@ -1,13 +1,9 @@
 package dev.ngdangkiet.pingpongrestfulapi.customer.payload;
 
-import dev.ngdangkiet.pingpongrestfulapi.common.PingPongConstant;
 import dev.ngdangkiet.pingpongrestfulapi.validation.ValidationGender;
 import dev.ngdangkiet.pingpongrestfulapi.validation.ValidationPassword;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
 
 /**
  * @author ngdangkiet

@@ -24,6 +24,7 @@ import org.springframework.util.CollectionUtils;
 
 import java.io.ByteArrayInputStream;
 import java.lang.reflect.Field;
+import java.time.Duration;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -62,7 +63,7 @@ public class CustomerServiceImpl implements ICustomerService {
         customers = customerRepository.findAll().stream()
                 .map(customerMapper)
                 .collect(Collectors.toList());
-        redisUtil.putList(CUSTOMER_KEY, customers);
+        redisUtil.putList(CUSTOMER_KEY, customers, Duration.ofMinutes(15));
 
         return customers;
     }
